@@ -188,6 +188,7 @@
       console.log('constructor elements',element);
       thisWidget.getElements(element);
       thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initActions();
     }
 
     getElements(element){
@@ -203,10 +204,11 @@
       const thisWidget = this;
       const newValue = parseInt(value);
       /* TODO add validatiom */
-      thisWidget.value = newValue;
-      thisWidget.input.value = thisWidget.value;
       if(thisWidget.value !== newValue && !isNaN(newValue)){
         thisWidget.value = newValue;
+        thisWidget.input.value = thisWidget.value;
+      }else{
+        thisWidget.input.value = thisWidget.value;
       }
     }
 
