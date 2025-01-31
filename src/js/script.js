@@ -85,6 +85,7 @@ class Product {
     thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
   }
 
   initAccordion() {
@@ -143,15 +144,22 @@ class Product {
       for(let optionId in param.options){
         // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
         const option = param.options[optionId];
+        const activeImage = thisProduct.imageWrapper.querySelector('.'+paramId+'-'+optionId);
         //console.log(optionId,option);
           // check if there is param with a name of paramId in formData and if it includes optionId
         if(formData[paramId] && formData[paramId].includes(optionId)) {
+          if(activeImage != null){
+            activeImage.classList.add(classNames.menuProduct.imageVisible);
+          }
           // check if the option is not default
           if(option['default'] != true) {
             // add option price to price variable
               price += option['price']
           }
         } else {
+          if(activeImage != null){
+            activeImage.classList.remove(classNames.menuProduct.imageVisible);
+          }
           // check if the option is default
           if(option['default']) {
             // reduce price variable
