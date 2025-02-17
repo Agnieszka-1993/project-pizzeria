@@ -1,36 +1,57 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
+//import { init } from "browser-sync";
+
 {
   'use strict';
 
   const select = {
     templateOf: {
-      menuProduct: "#template-menu-product",
+      menuProduct: '#template-menu-product',
+      cartProduct: '#template-cart-product',
+    },
+    containerOf: {
+      menu: '#product-list',
+      cart: '#cart',
+    },
+    all: {
+      menuProducts: '#product-list > .product',
+      menuProductsActive: '#product-list > .product.active',
+      formInputs: 'input, select',
+    },
+    menuProduct: {
+      clickable: '.product__header',
+      form: '.product__order',
+      priceElem: '.product__total-price .price',
+      imageWrapper: '.product__images',
+      amountWidget: '.widget-amount',
+      cartButton: '[href="#add-to-cart"]',
+    },
+    widgets: {
+      amount: {
+        input: 'input.amount',
+        linkDecrease: 'a[href="#less"]',
+        linkIncrease: 'a[href="#more"]',
       },
-      containerOf: {
-        menu: '#product-list',
-        cart: '#cart',
-      },
-      all: {
-        menuProducts: '#product-list > .product',
-        menuProductsActive: '#product-list > .product.active',
-        formInputs: 'input, select',
-      },
-      menuProduct: {
-        clickable: '.product__header',
-        form: '.product__order',
-        priceElem: '.product__total-price .price',
-        imageWrapper: '.product__images',
-        amountWidget: '.widget-amount',
-        cartButton: '[href="#add-to-cart"]',
-      },
-      widgets: {
-        amount: {
-          input: 'input[name="amount"]',
-          linkDecrease: 'a[href="#less"]',
-          linkIncrease: 'a[href="#more"]',
-        },
-      },
+    },
+    cart: {
+      productList: '.cart__order-summary',
+      toggleTrigger: '.cart__summary',
+      totalNumber: `.cart__total-number`,
+      totalPrice: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+      subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
+      deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
+      form: '.cart__order',
+      formSubmit: '.cart__order [type="submit"]',
+      phone: '[name="phone"]',
+      address: '[name="address"]',
+    },
+    cartProduct: {
+      amountWidget: '.widget-amount',
+      price: '.cart__product-price',
+      edit: '[href="#edit"]',
+      remove: '[href="#remove"]',
+    },
   };
 
   const classNames = {
@@ -38,18 +59,25 @@
       wrapperActive: 'active',
       imageVisible: 'active',
     },
+    cart: {
+      wrapperActive: 'active',
+    },
   };
 
   const settings = {
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 0,
-      defaultMax: 10,
-    }
+      defaultMin: 1,
+      defaultMax: 9,
+    },
+    cart: {
+      defaultDeliveryFee: 20,
+    },
   };
 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
+    cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
   };
 
 
@@ -81,7 +109,8 @@
 
     getElements(){
       const thisProduct = this;
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.dom = {};
+      thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
@@ -95,7 +124,7 @@
       /* find the clickable trigger (the element that should react to clicking) */
       //const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       /* START: add event listener to clickable trigger on event click */
-      thisProduct.accordionTrigger.addEventListener('click', function(event) {
+      thisProduct.dom.accordionTrigger.addEventListener('click', function(event) {
         /* prevent default action for event */
         event.preventDefault();
         /* find active product (product that has active class) */
@@ -209,7 +238,6 @@
     setValue(value){
       const thisWidget = this;
       const newValue = parseInt(value);
-      /* TODO add validatiom */
       if(thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
         thisWidget.value = newValue;
         thisWidget.input.value = thisWidget.value;
@@ -243,7 +271,37 @@
   }
 
 
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+      thisCart.products = [];
+      thisCart.getElements(element);
+      thisCart.initActions();
+      console.log('new cart', thisCart);
+    }
+
+    getElements(element){
+      const thisCart = this;
+      thisCart.dom = {};
+      thisCart.dom.wrapper = element;
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+    }
+
+    initActions(){
+      const thisCart = this;
+      thisCart.dom.toggleTrigger.addEventListener('click',function(){
+        event.preventDefault();
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+    }
+  }
+
   const app = {
+    initCart: function(){
+      const thisApp = this;
+      const catrElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart(catrElem);
+    },
     initMenu: function(){
       const thisApp = this;
       //console.log('thisApp.data',thisApp.data)
@@ -264,6 +322,7 @@
       console.log('templates:', templates);
       thisApp.initData();
       thisApp.initMenu();
+      thisApp.initCart();
     },
   };
 
