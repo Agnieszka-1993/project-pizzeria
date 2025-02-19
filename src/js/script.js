@@ -219,21 +219,26 @@
 
     addToCart(){
       const thisProduct = this;
-      app.cart.add(thisProduct);
+
+      app.cart.add(thisProduct.prepareCartProduct());
 
     }
 
     prepareCartProduct(){
       const thisProduct = this;
-      const productSummary = {};
 
-      productSummary.id = thisProduct.id;
-      productSummary.name = thisProduct.name;
-      productSummary.amount = thisProduct.amount;
-      productSummary.price = thisProduct.price;
-      productSummary.priceSingle = thisProduct.priceSingle;
 
-      productSummary.params = {};
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        price: thisProduct.priceElem.innerHTML,
+        priceSingle: thisProduct.priceSingle,
+        params: thisProduct.prepareCartProductParams(),
+      };
+
+    //  productSummary.params = {};
+     // productSummary.params = thisProduct.prepareCartProductParams();
 
       return productSummary;
     }
@@ -258,10 +263,10 @@
         // for every option in this category
         for(let optionId in param.options){
           const option = param.options[optionId];
-          console.log('paramId: ', paramId);
+          /*console.log('paramId: ', paramId);
           console.log('param: ', param);
           console.log('optionId: ', optionId);
-          console.log('option: ', option);
+          console.log('option: ', option);*/
             // check if there is param with a name of paramId in formData and if it includes optionId
           if(formData[paramId].includes(optionId)) {
             params[paramId].options[optionId] = param.label;
