@@ -92,6 +92,7 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
+      thisProduct.prepareCartProductParams();
       //console.log('New product:',thisProduct);
     }
 
@@ -111,6 +112,7 @@
       const thisProduct = this;
       thisProduct.dom = {};
       thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
@@ -218,6 +220,7 @@
     addToCart(){
       const thisProduct = this;
       app.cart.add(thisProduct);
+
     }
 
     prepareCartProduct(){
@@ -229,6 +232,46 @@
       productSummary.amount = thisProduct.amount;
       productSummary.price = thisProduct.price;
       productSummary.priceSingle = thisProduct.priceSingle;
+
+      productSummary.params = {};
+
+      return productSummary;
+    }
+
+    prepareCartProductParams(){
+      const thisProduct = this;
+
+      const params = {};
+
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      //console.log('formData',formData);
+      // for every category (param)...
+      for(let paramId in thisProduct.data.params){
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        };
+        //console.log(paramId,param);
+        // for every option in this category
+        for(let optionId in param.options){
+          const option = param.options[optionId];
+          console.log('paramId: ', paramId);
+          console.log('param: ', param);
+          console.log('optionId: ', optionId);
+          console.log('option: ', option);
+            // check if there is param with a name of paramId in formData and if it includes optionId
+          if(formData[paramId].includes(optionId)) {
+            params[paramId].options[optionId] = param.label;
+          }
+        }
+
+      }
+      return params;
+
+
     }
   }
 
@@ -305,6 +348,7 @@
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList)
     }
 
     initActions(){
@@ -316,8 +360,12 @@
     }
 
     add(menuProduct){
-      //const thisCart = this;
+      const thisCart = this;
       console.log('adding product', menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
+      const generatedDom = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(generatedDom);
+
     }
   }
 
