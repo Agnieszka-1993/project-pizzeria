@@ -262,7 +262,7 @@
         //console.log(paramId,param);
         // for every option in this category
         for(let optionId in param.options){
-          const option = param.options[optionId];
+
           /*console.log('paramId: ', paramId);
           console.log('param: ', param);
           console.log('optionId: ', optionId);
@@ -345,7 +345,7 @@
       thisCart.getElements(element);
       thisCart.initActions();
       //thisCart.add(menuProduct);
-      //console.log('new cart', thisCart);
+      console.log('new cart', thisCart);
     }
 
     getElements(element){
@@ -366,18 +366,18 @@
 
     add(menuProduct){
       const thisCart = this;
-      //console.log('adding product', menuProduct);
+      console.log('adding product', menuProduct);
       const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDom = utils.createDOMFromHTML(generatedHTML);
       thisCart.dom.productList.appendChild(generatedDom);
-      thisCart.products.push(menuProduct);
-      console.log('thisCard.products',thisCart.products);
+      //thisCart.products.push(new CartProduct(menuProduct, generatedDom));
+      //console.log('thisCard.products',thisCart.products);
 
     }
   }
 
 
-  class CartProduct {
+ /* class CartProduct {
     constructor(menuProduct,element){
       const thisCartProduct = this;
       console.log('menuProduct: ', menuProduct.id);
@@ -403,7 +403,7 @@
     }
 
 
-  }
+  }*/
 
 
   const app = {
