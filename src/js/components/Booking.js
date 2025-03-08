@@ -19,6 +19,14 @@ class Booking {
         thisBooking.dom.peopleAmount = document.querySelector(select.booking.peopleAmount);
         thisBooking.dom.hoursAmount = document.querySelector(select.booking.hoursAmount);
     }
+    parseValue(value){
+        return parseInt(value);
+    }
+
+    isValid(value){
+        return !isNaN(value)
+    }
+
 
     initWidgets(){
         const thisBooking = this;
