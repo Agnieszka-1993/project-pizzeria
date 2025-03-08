@@ -3,8 +3,6 @@ import {select, settings} from '../settings.js';
 class AmountWidget {
     constructor(element){
       const thisWidget = this;
-      //console.log('Amount Widget',thisWidget);
-      //console.log('constructor elements',element);
       thisWidget.getElements(element);
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
