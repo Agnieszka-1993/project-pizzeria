@@ -1,20 +1,22 @@
 class BaseWidget {
-    constructor(element){
+    constructor(wrapperElement, initialValue){
         const thisWidget = this;
         thisWidget.dom = {};
         thisWidget.dom.wrapper = wrapperElement;
         thisWidget.value = initialValue;
     }
+
     setValue(value){
         const thisWidget = this;
         const newValue = thisWidget.parseValue(value);
+
         if(thisWidget.value !== newValue &&  thisWidget.isValid(newValue)){
           thisWidget.value = newValue;
-          thisWidget.input.value = thisWidget.value;
           thisWidget.announce();
-        }else{
-          thisWidget.renderValue();
         }
+
+        thisWidget.renderValue();
+
     }
 
     parseValue(value){
@@ -23,6 +25,19 @@ class BaseWidget {
 
     isValid(value){
       return !isNaN(value);
+    }
+    renderValue(){
+      const thisWidget = this;
+
+      thisWidget.dom.wrapper = thisWidget.value;
+
+    }
+    announce(){
+      const thisWidget = this;
+      const event = new CustomEvent('updated',{
+        bubbles: true
+      });
+      thisWidget.dom.wrapper.dispatchEvent(event);
     }
 
 

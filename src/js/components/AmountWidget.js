@@ -19,19 +19,6 @@ class AmountWidget extends BaseWidget {
 
     }
 
-    setValue(value){
-      const thisWidget = this;
-      const newValue = thisWidget.parseValue(value);
-      if(thisWidget.value !== newValue &&  thisWidget.isValid(newValue)){
-        thisWidget.value = newValue;
-        thisWidget.input.value = thisWidget.value;
-        thisWidget.announce();
-      }else{
-        thisWidget.renderValue();
-      }
-    }
-
-
     isValid(value){
       return !isNaN(value)
       && value >= settings.amountWidget.defaultMin
@@ -61,13 +48,7 @@ class AmountWidget extends BaseWidget {
       });
     }
 
-    announce(){
-      const thisWidget = this;
-      const event = new CustomEvent('updated',{
-        bubbles: true
-      });
-      thisWidget.dom.wrapper.dispatchEvent(event);
-    }
+
   }
 
 export default AmountWidget;
