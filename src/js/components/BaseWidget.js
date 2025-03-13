@@ -3,21 +3,33 @@ class BaseWidget {
         const thisWidget = this;
         thisWidget.dom = {};
         thisWidget.dom.wrapper = wrapperElement;
-        thisWidget.value = initialValue;
+        thisWidget.correctValue = initialValue;
     }
 
-    setValue(value){
-        const thisWidget = this;
-        const newValue = thisWidget.parseValue(value);
+    get value() {
+      const thisWidget = this;
 
-        if(thisWidget.value !== newValue &&  thisWidget.isValid(newValue)){
-          thisWidget.value = newValue;
+      return thisWidget.correctValue;
+    }
+
+    set value(value) {
+      const thisWidget = this;
+      const newValue = thisWidget.parseValue(value);
+
+      if (newValue != thisWidget.correctValue && thisWidget.isValid(newValue)) {
+          thisWidget.correctValue = newValue;
           thisWidget.announce();
-        }
+      }
 
-        thisWidget.renderValue();
-
+      thisWidget.renderValue();
     }
+
+    setValue(value) {
+      const thisWidget = this;
+
+      thisWidget.value = value;
+    }
+
 
     parseValue(value){
       return parseInt(value);
@@ -29,7 +41,7 @@ class BaseWidget {
     renderValue(){
       const thisWidget = this;
 
-      thisWidget.dom.wrapper = thisWidget.value;
+      thisWidget.dom.wrapper.innerHTML = thisWidget.value;
 
     }
     announce(){
