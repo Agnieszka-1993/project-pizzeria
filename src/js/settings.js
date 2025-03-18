@@ -9,6 +9,7 @@ export const select = {
       cart: '#cart',
       pages: '#pages',
       booking: '.booking-wrapper',
+      tables: '.floor-plan',
     },
     all: {
       menuProducts: '#product-list > .product',
@@ -40,9 +41,17 @@ export const select = {
       },
     },
     booking: {
-        peopleAmount: '.people-amount',
-        hoursAmount: '.hours-amount',
-        tables: '.floor-plan .table',
+      bookingForm: '.booking-form',
+      peopleAmount: '.people-amount',
+      hoursAmount: '.hours-amount',
+      tables: '.floor-plan .table',
+      date: '.booking-form [name="date"]',
+      hour: '.booking-form [name="hour"]',
+      people: '.booking-form [name="people"]',
+      duration: '.booking-form [name="hours"]',
+      phone: '.booking-form [name="phone"]',
+      address: '.booking-form [name="address"]',
+      starters: '.booking-form [name="starter"]',
     },
     nav: {
         links: '.main-nav a',
@@ -79,6 +88,8 @@ export  const classNames = {
     booking: {
       loading: 'loading',
       tableBooked: 'booked',
+      chosenTable: 'selected',
+      table: 'table',
   },
   nav: {
       active: 'active',
