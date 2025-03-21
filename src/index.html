@@ -22,6 +22,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#home">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
       </div>
@@ -63,6 +64,9 @@
   </header>
 
   <div id="pages">
+    <section id="home">
+      <div id="home-page" class="home-page container"></div>
+    </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
@@ -70,6 +74,100 @@
       <div class="booking-wrapper container"></div>
     </section>
   </div>
+
+  <script id="template-home" type="text/x-handlebars-template">
+    <div class="home-quicklinks">
+      <a href="order"><div class="home-quicklinks__orderonline">
+        <p class="home-quicklink__title">Order online</p>
+        <p class="home-quicklink__subtitle">Delicious food deliver to your home</p>
+      </div></a>
+      <a href="booking"><div class="home-quicklinks__bookatable">
+        <p class="home-quicklink__title">Book a table</p>
+        <p class="home-quicklink__subtitle">Reserve a table in our restaurant</p>
+      </div></a>
+      <div class="home-quicklinks__openinghours">
+        <p class="home-quicklink__title">Opening hours</p>
+        <p class="home-quicklink__subtitle">TUE-SUN, 12PM-12AM</p>
+      </div>
+    </div>
+    <div class="carousel">
+      <div class="carousel-cell">
+        <div class="carousel__content">
+          <div class="carousel__imgwrapper">
+            <img src="images/home/pizza-3.jpg" alt="Pizza">
+          </div>
+          <div class="carousel__contentwrapper">
+            <p class="carousel__testimonial-title">Amazing service Test</p>
+            <p class="carousel__testimonial-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc lacinia ultricies. Nullam eget felis eget nunc lacinia ultricies.</p>
+            <p class="carousel__testimonial-author">- Margaret Osborne</p>
+          </div>
+        </div>
+      </div>
+       <div class="carousel-cell">
+        <div class="carousel__content">
+          <div class="carousel__imgwrapper">
+            <img src="images/home/pizza-3.jpg" alt="Pizza">
+          </div>
+          <div class="carousel__contentwrapper">
+            <p class="carousel__testimonial-title">Amazing service</p>
+            <p class="carousel__testimonial-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc lacinia ultricies. Nullam eget felis eget nunc lacinia ultricies.</p>
+            <p class="carousel__testimonial-author">- Margaret Osborne</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="instagram">
+      <div class="instagram__images">
+        <div class="instagram__images-image-wrapper">
+          <img src="images/home/pizza-4.jpg" alt="Instagram 1">
+          <div class="overlay">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-share-nodes"></i>
+          </div>
+        </div>
+        <div class="instagram__images-image-wrapper">
+          <img src="images/home/pizza-5.jpg" alt="Instagram 1">
+          <div class="overlay">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-share-nodes"></i>
+          </div>
+        </div>
+        <div class="instagram__images-image-wrapper">
+          <img src="images/home/pizza-6.jpg" alt="Instagram 1">
+          <div class="overlay">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-share-nodes"></i>
+          </div>
+        </div>
+        <div class="instagram__images-image-wrapper">
+          <img src="images/home/pizza-7.jpg" alt="Instagram 1">
+          <div class="overlay">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-share-nodes"></i>
+          </div>
+        </div>
+        <div class="instagram__images-image-wrapper">
+          <img src="images/home/pizza-8.jpg" alt="Instagram 1">
+          <div class="overlay">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-share-nodes"></i>
+          </div>
+        </div>
+        <div class="instagram__images-image-wrapper">
+          <img src="images/home/pizza-9.jpg" alt="Instagram 1">
+          <div class="overlay">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-share-nodes"></i>
+          </div>
+        </div>
+      </div>
+    <div class="instagram__view-more-link-wrapper">
+      <a class="instagram__view-more-link">Wiew more on Instagram</a>
+    </div>
+  </div>
+
+  </div>
+  </script>
 
   <script id="template-cart-product" type="text/x-handlebars-template">
     <li>
